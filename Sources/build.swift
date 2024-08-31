@@ -32,19 +32,21 @@ func buildStatement(ctx: ArithmeticParser.StatContext) throws -> Stat {
 func buidExpression(ctx: ArithmeticParser.ExprContext) throws -> Expr {
   switch ctx {
   case let ctx as ArithmeticParser.IntContext:
-      .int(value: Int(ctx.INT()!.getText())!)
+    return .int(value: Int(ctx.INT()!.getText())!)
   case let ctx as ArithmeticParser.IdContext:
-      .id(name: ctx.getText())
-  case let ctx as ArithmeticParser.AddContext:
-      .add(lhs: try buidExpression(ctx: ctx.expr(0)!), rhs: try buidExpression(ctx: ctx.expr(1)!))
-  case let ctx as ArithmeticParser.SubContext:
-      .sub(lhs: try buidExpression(ctx: ctx.expr(0)!), rhs: try buidExpression(ctx: ctx.expr(1)!))
-  case let ctx as ArithmeticParser.MulContext:
-      .mul(lhs: try buidExpression(ctx: ctx.expr(0)!), rhs: try buidExpression(ctx: ctx.expr(1)!))
-  case let ctx as ArithmeticParser.DivContext:
-      .div(lhs: try buidExpression(ctx: ctx.expr(0)!), rhs: try buidExpression(ctx: ctx.expr(1)!))
+    return .id(name: ctx.getText())
+  case let ctx as ArithmeticParser.AddSubContext:
+    if ctx.op.getText() == "+" {
+      return .add(lhs: try buidExpression(ctx: ctx.expr(0)!), rhs: try buidExpression(ctx: ctx.expr(1)!))
+    }
+    return .sub(lhs: try buidExpression(ctx: ctx.expr(0)!), rhs: try buidExpression(ctx: ctx.expr(1)!))
+  case let ctx as ArithmeticParser.MulDivContext:
+    if ctx.op.getText() == "*" {
+      return .mul(lhs: try buidExpression(ctx: ctx.expr(0)!), rhs: try buidExpression(ctx: ctx.expr(1)!))
+    }
+    return .div(lhs: try buidExpression(ctx: ctx.expr(0)!), rhs: try buidExpression(ctx: ctx.expr(1)!))
   case let ctx as ArithmeticParser.ParensContext:
-      .parens(expr: try buidExpression(ctx: ctx.expr()!))
+    return .parens(expr: try buidExpression(ctx: ctx.expr()!))
   default:
     throw BuildError.UnexpectedParseContext("not an expression")
   }

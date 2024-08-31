@@ -242,90 +242,6 @@ open class ArithmeticParser: Parser {
 			return ArithmeticParser.RULE_expr
 		}
 	}
-	public class DivContext: ExprContext {
-			open
-			func expr() -> [ExprContext] {
-				return getRuleContexts(ExprContext.self)
-			}
-			open
-			func expr(_ i: Int) -> ExprContext? {
-				return getRuleContext(ExprContext.self, i)
-			}
-
-		public
-		init(_ ctx: ExprContext) {
-			super.init()
-			copyFrom(ctx)
-		}
-		override open
-		func enterRule(_ listener: ParseTreeListener) {
-			if let listener = listener as? ArithmeticListener {
-				listener.enterDiv(self)
-			}
-		}
-		override open
-		func exitRule(_ listener: ParseTreeListener) {
-			if let listener = listener as? ArithmeticListener {
-				listener.exitDiv(self)
-			}
-		}
-	}
-	public class AddContext: ExprContext {
-			open
-			func expr() -> [ExprContext] {
-				return getRuleContexts(ExprContext.self)
-			}
-			open
-			func expr(_ i: Int) -> ExprContext? {
-				return getRuleContext(ExprContext.self, i)
-			}
-
-		public
-		init(_ ctx: ExprContext) {
-			super.init()
-			copyFrom(ctx)
-		}
-		override open
-		func enterRule(_ listener: ParseTreeListener) {
-			if let listener = listener as? ArithmeticListener {
-				listener.enterAdd(self)
-			}
-		}
-		override open
-		func exitRule(_ listener: ParseTreeListener) {
-			if let listener = listener as? ArithmeticListener {
-				listener.exitAdd(self)
-			}
-		}
-	}
-	public class SubContext: ExprContext {
-			open
-			func expr() -> [ExprContext] {
-				return getRuleContexts(ExprContext.self)
-			}
-			open
-			func expr(_ i: Int) -> ExprContext? {
-				return getRuleContext(ExprContext.self, i)
-			}
-
-		public
-		init(_ ctx: ExprContext) {
-			super.init()
-			copyFrom(ctx)
-		}
-		override open
-		func enterRule(_ listener: ParseTreeListener) {
-			if let listener = listener as? ArithmeticListener {
-				listener.enterSub(self)
-			}
-		}
-		override open
-		func exitRule(_ listener: ParseTreeListener) {
-			if let listener = listener as? ArithmeticListener {
-				listener.exitSub(self)
-			}
-		}
-	}
 	public class ParensContext: ExprContext {
 			open
 			func expr() -> ExprContext? {
@@ -350,7 +266,8 @@ open class ArithmeticParser: Parser {
 			}
 		}
 	}
-	public class MulContext: ExprContext {
+	public class MulDivContext: ExprContext {
+		public var op: Token!
 			open
 			func expr() -> [ExprContext] {
 				return getRuleContexts(ExprContext.self)
@@ -368,13 +285,42 @@ open class ArithmeticParser: Parser {
 		override open
 		func enterRule(_ listener: ParseTreeListener) {
 			if let listener = listener as? ArithmeticListener {
-				listener.enterMul(self)
+				listener.enterMulDiv(self)
 			}
 		}
 		override open
 		func exitRule(_ listener: ParseTreeListener) {
 			if let listener = listener as? ArithmeticListener {
-				listener.exitMul(self)
+				listener.exitMulDiv(self)
+			}
+		}
+	}
+	public class AddSubContext: ExprContext {
+		public var op: Token!
+			open
+			func expr() -> [ExprContext] {
+				return getRuleContexts(ExprContext.self)
+			}
+			open
+			func expr(_ i: Int) -> ExprContext? {
+				return getRuleContext(ExprContext.self, i)
+			}
+
+		public
+		init(_ ctx: ExprContext) {
+			super.init()
+			copyFrom(ctx)
+		}
+		override open
+		func enterRule(_ listener: ParseTreeListener) {
+			if let listener = listener as? ArithmeticListener {
+				listener.enterAddSub(self)
+			}
+		}
+		override open
+		func exitRule(_ listener: ParseTreeListener) {
+			if let listener = listener as? ArithmeticListener {
+				listener.exitAddSub(self)
 			}
 		}
 	}
@@ -439,6 +385,7 @@ open class ArithmeticParser: Parser {
 		var _prevctx: ExprContext = _localctx
 		let _startState: Int = 4
 		try enterRecursionRule(_localctx, 4, ArithmeticParser.RULE_expr, _p)
+		var _la: Int = 0
 		defer {
 	    		try! unrollRecursionContexts(_parentctx)
 	    }
@@ -483,7 +430,7 @@ open class ArithmeticParser: Parser {
 				throw ANTLRException.recognition(e: NoViableAltException(self))
 			}
 			_ctx!.stop = try _input.LT(-1)
-			setState(44)
+			setState(38)
 			try _errHandler.sync(self)
 			_alt = try getInterpreter().adaptivePredict(_input,4,_ctx)
 			while (_alt != 2 && _alt != ATN.INVALID_ALT_NUMBER) {
@@ -492,58 +439,48 @@ open class ArithmeticParser: Parser {
 					   try triggerExitRuleEvent()
 					}
 					_prevctx = _localctx
-					setState(42)
+					setState(36)
 					try _errHandler.sync(self)
 					switch(try getInterpreter().adaptivePredict(_input,3, _ctx)) {
 					case 1:
-						_localctx = MulContext(  ExprContext(_parentctx, _parentState))
+						_localctx = MulDivContext(  ExprContext(_parentctx, _parentState))
 						try pushNewRecursionContext(_localctx, _startState, ArithmeticParser.RULE_expr)
 						setState(30)
-						if (!(precpred(_ctx, 7))) {
-						    throw ANTLRException.recognition(e:FailedPredicateException(self, "precpred(_ctx, 7)"))
-						}
-						setState(31)
-						try match(ArithmeticParser.Tokens.T__1.rawValue)
-						setState(32)
-						try expr(8)
-
-						break
-					case 2:
-						_localctx = DivContext(  ExprContext(_parentctx, _parentState))
-						try pushNewRecursionContext(_localctx, _startState, ArithmeticParser.RULE_expr)
-						setState(33)
-						if (!(precpred(_ctx, 6))) {
-						    throw ANTLRException.recognition(e:FailedPredicateException(self, "precpred(_ctx, 6)"))
-						}
-						setState(34)
-						try match(ArithmeticParser.Tokens.T__2.rawValue)
-						setState(35)
-						try expr(7)
-
-						break
-					case 3:
-						_localctx = AddContext(  ExprContext(_parentctx, _parentState))
-						try pushNewRecursionContext(_localctx, _startState, ArithmeticParser.RULE_expr)
-						setState(36)
 						if (!(precpred(_ctx, 5))) {
 						    throw ANTLRException.recognition(e:FailedPredicateException(self, "precpred(_ctx, 5)"))
 						}
-						setState(37)
-						try match(ArithmeticParser.Tokens.T__3.rawValue)
-						setState(38)
+						setState(31)
+						_localctx.castdown(MulDivContext.self).op = try _input.LT(1)
+						_la = try _input.LA(1)
+						if (!(_la == ArithmeticParser.Tokens.T__1.rawValue || _la == ArithmeticParser.Tokens.T__2.rawValue)) {
+							_localctx.castdown(MulDivContext.self).op = try _errHandler.recoverInline(self) as Token
+						}
+						else {
+							_errHandler.reportMatch(self)
+							try consume()
+						}
+						setState(32)
 						try expr(6)
 
 						break
-					case 4:
-						_localctx = SubContext(  ExprContext(_parentctx, _parentState))
+					case 2:
+						_localctx = AddSubContext(  ExprContext(_parentctx, _parentState))
 						try pushNewRecursionContext(_localctx, _startState, ArithmeticParser.RULE_expr)
-						setState(39)
+						setState(33)
 						if (!(precpred(_ctx, 4))) {
 						    throw ANTLRException.recognition(e:FailedPredicateException(self, "precpred(_ctx, 4)"))
 						}
-						setState(40)
-						try match(ArithmeticParser.Tokens.T__4.rawValue)
-						setState(41)
+						setState(34)
+						_localctx.castdown(AddSubContext.self).op = try _input.LT(1)
+						_la = try _input.LA(1)
+						if (!(_la == ArithmeticParser.Tokens.T__3.rawValue || _la == ArithmeticParser.Tokens.T__4.rawValue)) {
+							_localctx.castdown(AddSubContext.self).op = try _errHandler.recoverInline(self) as Token
+						}
+						else {
+							_errHandler.reportMatch(self)
+							try consume()
+						}
+						setState(35)
 						try expr(5)
 
 						break
@@ -551,7 +488,7 @@ open class ArithmeticParser: Parser {
 					}
 			 
 				}
-				setState(46)
+				setState(40)
 				try _errHandler.sync(self)
 				_alt = try getInterpreter().adaptivePredict(_input,4,_ctx)
 			}
@@ -576,29 +513,26 @@ open class ArithmeticParser: Parser {
 	}
 	private func expr_sempred(_ _localctx: ExprContext!,  _ predIndex: Int) throws -> Bool {
 		switch (predIndex) {
-		    case 0:return precpred(_ctx, 7)
-		    case 1:return precpred(_ctx, 6)
-		    case 2:return precpred(_ctx, 5)
-		    case 3:return precpred(_ctx, 4)
+		    case 0:return precpred(_ctx, 5)
+		    case 1:return precpred(_ctx, 4)
 		    default: return true
 		}
 	}
 
 	static let _serializedATN:[Int] = [
-		4,1,11,48,2,0,7,0,2,1,7,1,2,2,7,2,1,0,4,0,8,8,0,11,0,12,0,9,1,1,1,1,1,
+		4,1,11,42,2,0,7,0,2,1,7,1,2,2,7,2,1,0,4,0,8,8,0,11,0,12,0,9,1,1,1,1,1,
 		1,1,1,1,1,1,1,1,1,1,1,3,1,20,8,1,1,2,1,2,1,2,1,2,1,2,1,2,1,2,3,2,29,8,
-		2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,5,2,43,8,2,10,2,12,2,
-		46,9,2,1,2,0,1,4,3,0,2,4,0,0,52,0,7,1,0,0,0,2,19,1,0,0,0,4,28,1,0,0,0,
-		6,8,3,2,1,0,7,6,1,0,0,0,8,9,1,0,0,0,9,7,1,0,0,0,9,10,1,0,0,0,10,1,1,0,
-		0,0,11,12,3,4,2,0,12,13,5,0,0,1,13,20,1,0,0,0,14,15,5,8,0,0,15,16,5,1,
-		0,0,16,17,3,4,2,0,17,18,5,0,0,1,18,20,1,0,0,0,19,11,1,0,0,0,19,14,1,0,
-		0,0,20,3,1,0,0,0,21,22,6,2,-1,0,22,29,5,9,0,0,23,29,5,8,0,0,24,25,5,6,
-		0,0,25,26,3,4,2,0,26,27,5,7,0,0,27,29,1,0,0,0,28,21,1,0,0,0,28,23,1,0,
-		0,0,28,24,1,0,0,0,29,44,1,0,0,0,30,31,10,7,0,0,31,32,5,2,0,0,32,43,3,4,
-		2,8,33,34,10,6,0,0,34,35,5,3,0,0,35,43,3,4,2,7,36,37,10,5,0,0,37,38,5,
-		4,0,0,38,43,3,4,2,6,39,40,10,4,0,0,40,41,5,5,0,0,41,43,3,4,2,5,42,30,1,
-		0,0,0,42,33,1,0,0,0,42,36,1,0,0,0,42,39,1,0,0,0,43,46,1,0,0,0,44,42,1,
-		0,0,0,44,45,1,0,0,0,45,5,1,0,0,0,46,44,1,0,0,0,5,9,19,28,42,44
+		2,1,2,1,2,1,2,1,2,1,2,1,2,5,2,37,8,2,10,2,12,2,40,9,2,1,2,0,1,4,3,0,2,
+		4,0,2,1,0,2,3,1,0,4,5,44,0,7,1,0,0,0,2,19,1,0,0,0,4,28,1,0,0,0,6,8,3,2,
+		1,0,7,6,1,0,0,0,8,9,1,0,0,0,9,7,1,0,0,0,9,10,1,0,0,0,10,1,1,0,0,0,11,12,
+		3,4,2,0,12,13,5,0,0,1,13,20,1,0,0,0,14,15,5,8,0,0,15,16,5,1,0,0,16,17,
+		3,4,2,0,17,18,5,0,0,1,18,20,1,0,0,0,19,11,1,0,0,0,19,14,1,0,0,0,20,3,1,
+		0,0,0,21,22,6,2,-1,0,22,29,5,9,0,0,23,29,5,8,0,0,24,25,5,6,0,0,25,26,3,
+		4,2,0,26,27,5,7,0,0,27,29,1,0,0,0,28,21,1,0,0,0,28,23,1,0,0,0,28,24,1,
+		0,0,0,29,38,1,0,0,0,30,31,10,5,0,0,31,32,7,0,0,0,32,37,3,4,2,6,33,34,10,
+		4,0,0,34,35,7,1,0,0,35,37,3,4,2,5,36,30,1,0,0,0,36,33,1,0,0,0,37,40,1,
+		0,0,0,38,36,1,0,0,0,38,39,1,0,0,0,39,5,1,0,0,0,40,38,1,0,0,0,5,9,19,28,
+		36,38
 	]
 
 	public

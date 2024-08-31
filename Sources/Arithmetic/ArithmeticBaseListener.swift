@@ -54,45 +54,6 @@ open class ArithmeticBaseListener: ArithmeticListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func enterDiv(_ ctx: ArithmeticParser.DivContext) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	open func exitDiv(_ ctx: ArithmeticParser.DivContext) { }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	open func enterAdd(_ ctx: ArithmeticParser.AddContext) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	open func exitAdd(_ ctx: ArithmeticParser.AddContext) { }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	open func enterSub(_ ctx: ArithmeticParser.SubContext) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	open func exitSub(_ ctx: ArithmeticParser.SubContext) { }
-
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	open func enterParens(_ ctx: ArithmeticParser.ParensContext) { }
 	/**
 	 * {@inheritDoc}
@@ -106,13 +67,26 @@ open class ArithmeticBaseListener: ArithmeticListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func enterMul(_ ctx: ArithmeticParser.MulContext) { }
+	open func enterMulDiv(_ ctx: ArithmeticParser.MulDivContext) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	open func exitMul(_ ctx: ArithmeticParser.MulContext) { }
+	open func exitMulDiv(_ ctx: ArithmeticParser.MulDivContext) { }
+
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	open func enterAddSub(_ ctx: ArithmeticParser.AddSubContext) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	open func exitAddSub(_ ctx: ArithmeticParser.AddSubContext) { }
 
 	/**
 	 * {@inheritDoc}

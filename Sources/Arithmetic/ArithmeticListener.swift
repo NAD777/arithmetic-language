@@ -47,48 +47,6 @@ public protocol ArithmeticListener: ParseTreeListener {
 	 */
 	func exitAssign(_ ctx: ArithmeticParser.AssignContext)
 	/**
-	 * Enter a parse tree produced by the {@code Div}
-	 * labeled alternative in {@link ArithmeticParser#expr}.
-	 - Parameters:
-	   - ctx: the parse tree
-	 */
-	func enterDiv(_ ctx: ArithmeticParser.DivContext)
-	/**
-	 * Exit a parse tree produced by the {@code Div}
-	 * labeled alternative in {@link ArithmeticParser#expr}.
-	 - Parameters:
-	   - ctx: the parse tree
-	 */
-	func exitDiv(_ ctx: ArithmeticParser.DivContext)
-	/**
-	 * Enter a parse tree produced by the {@code Add}
-	 * labeled alternative in {@link ArithmeticParser#expr}.
-	 - Parameters:
-	   - ctx: the parse tree
-	 */
-	func enterAdd(_ ctx: ArithmeticParser.AddContext)
-	/**
-	 * Exit a parse tree produced by the {@code Add}
-	 * labeled alternative in {@link ArithmeticParser#expr}.
-	 - Parameters:
-	   - ctx: the parse tree
-	 */
-	func exitAdd(_ ctx: ArithmeticParser.AddContext)
-	/**
-	 * Enter a parse tree produced by the {@code Sub}
-	 * labeled alternative in {@link ArithmeticParser#expr}.
-	 - Parameters:
-	   - ctx: the parse tree
-	 */
-	func enterSub(_ ctx: ArithmeticParser.SubContext)
-	/**
-	 * Exit a parse tree produced by the {@code Sub}
-	 * labeled alternative in {@link ArithmeticParser#expr}.
-	 - Parameters:
-	   - ctx: the parse tree
-	 */
-	func exitSub(_ ctx: ArithmeticParser.SubContext)
-	/**
 	 * Enter a parse tree produced by the {@code parens}
 	 * labeled alternative in {@link ArithmeticParser#expr}.
 	 - Parameters:
@@ -103,19 +61,33 @@ public protocol ArithmeticListener: ParseTreeListener {
 	 */
 	func exitParens(_ ctx: ArithmeticParser.ParensContext)
 	/**
-	 * Enter a parse tree produced by the {@code Mul}
+	 * Enter a parse tree produced by the {@code MulDiv}
 	 * labeled alternative in {@link ArithmeticParser#expr}.
 	 - Parameters:
 	   - ctx: the parse tree
 	 */
-	func enterMul(_ ctx: ArithmeticParser.MulContext)
+	func enterMulDiv(_ ctx: ArithmeticParser.MulDivContext)
 	/**
-	 * Exit a parse tree produced by the {@code Mul}
+	 * Exit a parse tree produced by the {@code MulDiv}
 	 * labeled alternative in {@link ArithmeticParser#expr}.
 	 - Parameters:
 	   - ctx: the parse tree
 	 */
-	func exitMul(_ ctx: ArithmeticParser.MulContext)
+	func exitMulDiv(_ ctx: ArithmeticParser.MulDivContext)
+	/**
+	 * Enter a parse tree produced by the {@code AddSub}
+	 * labeled alternative in {@link ArithmeticParser#expr}.
+	 - Parameters:
+	   - ctx: the parse tree
+	 */
+	func enterAddSub(_ ctx: ArithmeticParser.AddSubContext)
+	/**
+	 * Exit a parse tree produced by the {@code AddSub}
+	 * labeled alternative in {@link ArithmeticParser#expr}.
+	 - Parameters:
+	   - ctx: the parse tree
+	 */
+	func exitAddSub(_ ctx: ArithmeticParser.AddSubContext)
 	/**
 	 * Enter a parse tree produced by the {@code id}
 	 * labeled alternative in {@link ArithmeticParser#expr}.
